@@ -3,52 +3,127 @@
     <head>
         <meta charset="utf-8">
         <script src="../node_modules/d3/dist/d3.js" charset="utf-8"></script>
-        <script src="TempGauge.js" charset="utf-8"></script>
-        <script src="PercentGauge.js" charset="utf-8"></script>
+        <script src="Gauge.js" charset="utf-8"></script>
         <style media="screen">
             * {
                 margin: 0;
                 padding: 0;
             }
 
-            #gauge {
+            #baseDiv {
+                width: 300px;
+                height: 300px;
+                position: relative;
                 text-align: center;
+            }
+
+            #temp2 {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            #temp3 {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            #baseDiv > span {
+                position: relative;
+                top: 1em;
+                font-family: monospace;
+                font-size: 1.6em;
             }
         </style>
     </head>
     <body>
 
-        <div id="temp-gauge" g-width="300" g-height="300" g-min="-50" g-max="50">
-            <div g-color="#888"></div>
-            <div g-color="#666"></div>
-            <div g-color="#333"></div>
-        </div>
-
-        <div id="perc-gauge" g-width="300" g-height="300">
-            <div g-color="#888"></div>
-            <div g-color="#666"></div>
+        <div id="baseDiv">
+            <div id="temp1"></div>
+            <div id="temp2"></div>
+            <div id="temp3"></div>
+            <span id="temp1-label"></span>
+            <span id="temp2-label"></span>
+            <span id="temp3-label"></span>
         </div>
 
         <script type="text/javascript">
 
-            initTempGauge("temp-gauge");
-            setInterval(function() {
-                updateTempGauge(
-                    "temp-gauge",
-                    Math.round(Math.random() * 3 + 40),
-                    Math.round(Math.random() * 5 - 30),
-                    Math.round(Math.random() * 5 + 10)
-                )
-            }, 1000);
+            let temp1 = new Gauge();
+            temp1.setDebug();
+            temp1.setConfig({
+                    rootElement: "temp1",
+                    labelElement: "temp1-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 3,
+                    tickSize: 2,
+                    tickThickness: 5,
+                    offset: 0,
+                    orientation: temp1.orientationVar().WEST,
+                    unit: "%",
+                    minValue: -50,      // If full circle is requested, these two
+                    maxValue: 50,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: 180,
+                    color: "#aaa",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: -50
+            });
+            temp1.update();
 
-            initPercentGauge("perc-gauge");
-            setInterval(function() {
-                updatePercentGauge(
-                    "perc-gauge",
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100)
-                )
-            }, 1000);
+            let temp2 = new Gauge();
+            temp2.setDebug();
+            temp2.setConfig({
+                    rootElement: "temp2",
+                    labelElement: "temp2-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 2.2,
+                    tickSize: 2,
+                    tickThickness: 5,
+                    offset: 46,
+                    orientation: temp2.orientationVar().WEST,
+                    unit: "%",
+                    minValue: -50,      // If full circle is requested, these two
+                    maxValue: 50,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: 180,
+                    color: "#888",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: 20
+            });
+            temp2.update();
+
+            let temp3 = new Gauge();
+            temp3.setDebug();
+            temp3.setConfig({
+                    rootElement: "temp3",
+                    labelElement: "temp3-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 2.4,
+                    tickSize: 2,
+                    tickThickness: 5,
+                    offset: 80,
+                    orientation: temp3.orientationVar().WEST,
+                    unit: "%",
+                    minValue: -50,      // If full circle is requested, these two
+                    maxValue: 50,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: 180,
+                    color: "#666",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: 10
+            });
+            temp3.update();
 
         </script>
     </body>
