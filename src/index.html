@@ -10,31 +10,61 @@
                 padding: 0;
             }
 
-            #baseDiv {
-                width: 300px;
-                height: 300px;
+            #baseDiv, #baseDiv2, #baseDiv3 {
                 position: relative;
                 text-align: center;
             }
 
-            #temp2 {
+            #baseDiv {
+                width: 400px;
+                height: 360px;
+            }
+
+            #baseDiv2, #baseDiv3 {
+                width: 300px;
+                height: 360px;
+            }
+
+            #temp2, #temp3, #temp5 {
                 position: absolute;
-                top: 0;
                 left: 0;
             }
 
-            #temp3 {
-                position: absolute;
+            #temp2, #temp3 {
+                top: -20px;
+            }
+
+            #temp5 {
                 top: 0;
-                left: 0;
             }
 
             #baseDiv > span {
                 position: relative;
                 top: 1em;
+            }
+
+            #baseDiv2 > span {
+                position: relative;
+                top: -3em;
+            }
+
+            #baseDiv3 > span {
+                position: relative;
+                top: -8.2em;
+            }
+
+            #baseDiv > span, #baseDiv2 > span, #baseDiv3 > span {
                 font-family: monospace;
                 font-size: 1.6em;
+                margin-left: 0.6em;
+                margin-right: 0.6em;
             }
+
+            #baseDiv > span {
+                position: relative;
+                top: -4em;
+            }
+
         </style>
     </head>
     <body>
@@ -48,21 +78,32 @@
             <span id="temp3-label"></span>
         </div>
 
+        <div id="baseDiv2">
+            <div id="temp4"></div>
+            <div id="temp5"></div>
+            <span id="temp4-label"></span>
+            <span id="temp5-label"></span>
+        </div>
+
+        <div id="baseDiv3">
+            <div id="clock"></div>
+            <span id="clock-label"></span>
+        </div>
+
         <script type="text/javascript">
 
             let temp1 = new Gauge();
-            temp1.setDebug();
             temp1.setConfig({
                     rootElement: "temp1",
                     labelElement: "temp1-label",
-                    width: 300,
+                    width: 400,
                     height: 300,
                     thickness: 3,
                     tickSize: 2,
                     tickThickness: 5,
                     offset: 0,
                     orientation: temp1.orientationVar().WEST,
-                    unit: "%",
+                    unit: "°c",
                     minValue: -50,      // If full circle is requested, these two
                     maxValue: 50,       // should share the same absolute value. Max value sets 100%.
                     allowOverflow: true,
@@ -71,23 +112,24 @@
                     color: "#aaa",
                     overflowColor: "#8f8",
                     underflowColor: "#f88",
-                    data: -50
+                    data: -50,
+                    showTickLabels: true,
+                    tickModulus: 1
             });
             temp1.update();
 
             let temp2 = new Gauge();
-            temp2.setDebug();
             temp2.setConfig({
                     rootElement: "temp2",
                     labelElement: "temp2-label",
-                    width: 300,
+                    width: 400,
                     height: 300,
                     thickness: 2.2,
                     tickSize: 2,
                     tickThickness: 5,
                     offset: 46,
                     orientation: temp2.orientationVar().WEST,
-                    unit: "%",
+                    unit: "°c",
                     minValue: -50,      // If full circle is requested, these two
                     maxValue: 50,       // should share the same absolute value. Max value sets 100%.
                     allowOverflow: true,
@@ -96,23 +138,23 @@
                     color: "#888",
                     overflowColor: "#8f8",
                     underflowColor: "#f88",
-                    data: 20
+                    data: 20,
+                    showTickLabels: false
             });
             temp2.update();
 
             let temp3 = new Gauge();
-            temp3.setDebug();
             temp3.setConfig({
                     rootElement: "temp3",
                     labelElement: "temp3-label",
-                    width: 300,
+                    width: 400,
                     height: 300,
                     thickness: 2.4,
                     tickSize: 2,
                     tickThickness: 5,
                     offset: 80,
                     orientation: temp3.orientationVar().WEST,
-                    unit: "%",
+                    unit: "°c",
                     minValue: -50,      // If full circle is requested, these two
                     maxValue: 50,       // should share the same absolute value. Max value sets 100%.
                     allowOverflow: true,
@@ -121,9 +163,90 @@
                     color: "#666",
                     overflowColor: "#8f8",
                     underflowColor: "#f88",
-                    data: 10
+                    data: 10,
+                    showTickLabels: false
             });
             temp3.update();
+
+            let temp4 = new Gauge();
+            temp4.setConfig({
+                    rootElement: "temp4",
+                    labelElement: "temp4-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 2.4,
+                    tickSize: 2,
+                    tickThickness: 4,
+                    offset: 0,
+                    orientation: 220,
+                    unit: "%",
+                    minValue: 0,      // If full circle is requested, these two
+                    maxValue: 100,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: 280,
+                    color: "#666",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: 100,
+                    showTickLabels: false
+            });
+            temp4.update();
+
+            let temp5 = new Gauge();
+            temp5.setConfig({
+                    rootElement: "temp5",
+                    labelElement: "temp5-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 2.4,
+                    tickSize: 2,
+                    tickThickness: 4,
+                    offset: 40,
+                    orientation: 220,
+                    unit: "%",
+                    minValue: 0,      // If full circle is requested, these two
+                    maxValue: 100,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: 280,
+                    color: "#222",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: 62,
+                    showTickLabels: false,
+            });
+            temp5.update();
+
+            let clock = new Gauge();
+            clock.setConfig({
+                    rootElement: "clock",
+                    labelElement: "clock-label",
+                    width: 300,
+                    height: 300,
+                    thickness: 2.4,
+                    tickSize: 1,
+                    tickThickness: 4,
+                    offset: 40,
+                    orientation: clock.orientationVar().NORTH,
+                    unit: "s",
+                    minValue: -1,      // If full circle is desired, these two
+                    maxValue: 15,       // should share the same absolute value. Max value sets 100%.
+                    allowOverflow: true,
+                    allowUnderflow: true,
+                    maxDegrees: -360, // Negative to expand the opposite direction.
+                    color: "#66f",
+                    overflowColor: "#8f8",
+                    underflowColor: "#f88",
+                    data: 16,
+                    showTickLabels: false
+            });
+            clock.update();
+
+            setInterval(function() {
+                clock.data = clock.data - 1;
+                clock.update();
+            }, 1000);
 
         </script>
     </body>

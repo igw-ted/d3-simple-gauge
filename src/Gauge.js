@@ -1,26 +1,40 @@
 class Gauge {
 
+    constructor() {
+        this.setDefaults();
+    }
+
     /*
      *  Update the view.
      */
     update() {
         if(typeof this.debug !== "undefined") {
             this.toString();
+            if(this.varsHasErrors()) {
+                return;
+            }
         }
-        if(this.varsHasErrors()) {
-            return;
+
+        let tickLabelPadding = 0;
+
+        if(this.showTickLabels) {
+            tickLabelPadding = 40;
         }
 
         let element = d3.select("#" + this.rootElement);
         element.node().innerHTML = "";
 
         element.node().style.width = this.width + "px";
-        element.node().style.height = this.height + "px";
+        element.node().style.height = (this.height + tickLabelPadding * 3) + "px";
 
-        let svg = element.append("svg")
+        this.svg = element.append("svg")
                         .attr("id", this.rootElement + "-svg")
-                        .attr("width", this.width)
-                        .attr("height", this.height);
+                        .attr("width", this.width - tickLabelPadding)
+                        .attr("height", this.height + tickLabelPadding * 3);
+
+        let thicknessBase = Math.min(this.width, this.height) * 0.5;
+        let tick = (this.maxDegrees) / (this.maxValue / this.tickSize);
+
 
         let orientation = this.orientation;
         switch(orientation) {
@@ -30,9 +44,6 @@ class Gauge {
             case "west": orientation = -90; break;
         }
 
-        let thicknessBase = Math.min(this.width, this.height) * 0.5;
-
-        let tick = (this.maxDegrees) / (this.maxValue / this.tickSize);
 
         let data = this.data;
         data = this.data > this.maxValue ? this.maxValue : this.data;
@@ -65,13 +76,64 @@ class Gauge {
                 color = this.underflowColor;
             }
 
-            svg.append("path")
+            this.svg.append("path")
             .attr("id", "arc-" + i)
             .attr("d", arc)
-            .attr("transform", "translate(" + this.width/2 + "," + this.height/2 + ")")
+            .attr("transform", "translate(" + (this.width - tickLabelPadding)/2 + "," + (this.height - tickLabelPadding)/1.5 + ")")
             .attr("fill", color);
 
-            d3.select("#" + this.labelElement).text(this.data + this.unit)
+        }
+
+        if(this.showTickLabels) {
+            this.setTickLabels(thicknessBase, orientation, tick, tickLabelPadding);
+        }
+        d3.select("#" + this.labelElement).text(this.data + this.unit)
+    }
+
+    setTickLabels(thicknessBase, orientation, tick, tickLabelPadding) {
+
+        let startAngle, endAngle;
+
+        for(let i = 0; i <= Math.floor(Math.abs(this.maxValue - this.minValue) / this.tickSize); i++) {
+
+            let label = this.minValue + (i * this.tickSize);
+
+            if(label % this.tickModulus !== 0) {
+                continue;
+            }
+
+            let angleOffset = label > 0 ? 5 : 5;
+
+            startAngle = (orientation - tick + angleOffset + (tick * i * -1)) * Math.PI/-180;
+            endAngle = (orientation  - tick + angleOffset + (tick * i * -1) + this.tickThickness) * Math.PI/-180;
+
+            let offset = label > 0 ? this.offset + 5 : this.offset;
+
+            let arc = d3.arc().innerRadius(thicknessBase - offset + 50 - thicknessBase * this.thickness / 10)
+            .outerRadius(thicknessBase - offset + 10)
+            .startAngle(startAngle)
+            .endAngle(endAngle);
+
+            let scale = this.minValue + (i * this.tickSize) > 0 ? "-1 1" : "1 1";
+
+            if(label > 0) {
+                label = this.maxValue - (this.minValue + (i * this.tickSize));
+            }
+
+            this.svg.append("path")
+            .attr("id", "arc-label-" + i)
+            .attr("d", arc)
+            .attr("transform", "translate(" + (this.width - tickLabelPadding)/2 + "," + (this.height - tickLabelPadding)/1.5 + ")scale(" + scale + ")")
+            .attr("fill", "rgba(0,0,0,0)");
+
+            let text = this.svg.append("text")
+            .style("font-size", "7px");
+
+            text.append("textPath")
+            .attr("xlink:href", "#arc-label-" + i)
+            .attr("startOffset", "10%")
+            .attr("text-anchor", "start")
+            .text(label);
         }
     }
 
@@ -193,6 +255,14 @@ class Gauge {
         this.color = color;
     }
 
+    setShowTickLabels(showTickLabels) {
+        this.showTickLabels = showTickLabels;
+    }
+
+    setTickModulus(tickModulus) {
+        this.tickModulus = tickModulus;
+    }
+
     /*
      *  Orientation help variables.
      */
@@ -203,6 +273,27 @@ class Gauge {
             EAST: "east",
             WEST: "west"
         }
+    }
+
+    setDefaults(config) {
+        this.width = 300;
+        this.height = 300;
+        this.thickness = 3;
+        this.tickSize = 1;
+        this.tickThickness = 3;
+        this.offset = 0;
+        this.orientation = this.orientationVar().NORTH;
+        this.unit = "";
+        this.minValue = -50;
+        this.maxValue = 50;
+        this.allowOverflow = true;
+        this.allowUnderflow = true;
+        this.maxDegrees = 360;
+        this.color = "#aaa";
+        this.overflowColor = "#aaa";
+        this.underflowColor = "#aaa";
+        this.showTickLabels = false;
+        this.tickModulus = 10;
     }
 
     setConfig(config) {
@@ -225,6 +316,8 @@ class Gauge {
         this.color = config.color;
         this.overflowColor = config.overflowColor;
         this.underflowColor = config.underflowColor;
+        this.showTickLabels = config.showTickLabels;
+        this.tickModulus = config.tickModulus;
     }
 
     error(message) {
@@ -249,6 +342,10 @@ class Gauge {
         console.log("Maximum Degrees: " + this.maxDegrees);
         console.log("Data: " + this.data);
         console.log("Color: " + this.color);
+        console.log("Overflow Color: " + this.overflowColor);
+        console.log("Underflow Color: " + this.underflowColor);
+        console.log("Show Tick Labels: " + this.showTickLabels);
+        console.log("Tick Modulus: " + this.tickModulus);
         console.log();
     }
 
@@ -388,6 +485,20 @@ class Gauge {
         if(typeof this.underflowColor === "undefined") {
             if(typeof this.debug !== "undefined") {
                 this.error("underflowColor must be set");
+            }
+            hasErrors = true;
+        }
+
+        if(typeof this.showTickLabels  === "undefined") {
+            if(typeof this.debug !== "undefined") {
+                this.error("showTickLabels  must be set");
+            }
+            hasErrors = true;
+        }
+
+        if(typeof this.tickModulus  === "undefined") {
+            if(typeof this.debug !== "undefined") {
+                this.error("tickModulus  must be set");
             }
             hasErrors = true;
         }
