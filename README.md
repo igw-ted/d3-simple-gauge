@@ -1,6 +1,6 @@
 # Gauge Proof of Concept v0.1b
 
-[Live Example](#)
+[Live Example](https://codepen.io/anon/pen/aKEobv?editors=1000)
 
 ## Triggers
 
@@ -39,7 +39,7 @@
 
 ## How To Use
 
-Most of the settings have a default, but at the very least you need to set the `rootElement` and something to add into the `data` variable. If you plan to show labels, you need to set the `labelElement` and possibly add the unit to plan to use, if any, to `unit` as well.
+Most of the settings have a default, but at the very least you need to set the `rootElement` and something to add into the `data` variable. If you plan to show labels, you need to set the `labelElement` and add the unit you plan to use, if any, to `unit` as well.
 
 **HTML**    
 ```
