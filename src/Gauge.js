@@ -79,7 +79,7 @@ class Gauge {
             this.svg.append("path")
             .attr("id", "arc-" + i)
             .attr("d", arc)
-            .attr("transform", "translate(" + (this.width - tickLabelPadding)/2 + "," + (this.height - tickLabelPadding)/1.5 + ")")
+            .attr("transform", "translate(" + (this.width - tickLabelPadding)/2 + "," + (this.height - tickLabelPadding)/2 + ")")
             .attr("fill", color);
 
         }
@@ -296,29 +296,7 @@ class Gauge {
         this.tickModulus = 10;
     }
 
-    setConfig(config) {
-        this.rootElement = typeof config.rootElement === "undefined" ? this.rootElement : config.rootElement;
-        this.labelElement = typeof config.labelElement === "undefined" ? this.labelElement : config.labelElement;
-        this.width = typeof config.width === "undefined" ? this.width : config.width;
-        this.height = typeof config.height === "undefined" ? this.height : config.height;
-        this.thickness = typeof config.thickness === "undefined" ? this.thickness : config.thickness;
-        this.tickSize = typeof config.tickSize === "undefined" ? this.tickSize : config.tickSize;
-        this.tickThickness = typeof config.tickThickness === "undefined" ? this.tickThickness : config.tickThickness;
-        this.offset = typeof config.offset === "undefined" ? this.offset : config.offset;
-        this.orientation = typeof config.orientation === "undefined" ? this.orientation : config.orientation;
-        this.unit = typeof config.unit === "undefined" ? this.unit : config.unit;
-        this.minValue = typeof config.minValue === "undefined" ? this.minValue : config.minValue;
-        this.maxValue = typeof config.maxValue === "undefined" ? this.maxValue : config.maxValue;
-        this.allowOverflow = typeof config.allowOverflow === "undefined" ? this.allowOverflow : config.allowOverflow;
-        this.allowUnderflow = typeof config.allowUnderflow === "undefined" ? this.allowUnderflow : config.allowUnderflow;
-        this.maxDegrees = typeof config.maxDegrees === "undefined" ? this.maxDegrees : config.maxDegrees;
-        this.data = typeof config.data === "undefined" ? this.data : config.data;
-        this.color = typeof config.color === "undefined" ? this.color : config.color;
-        this.overflowColor = typeof config.overflowColor === "undefined" ? this.overflowColor : config.overflowColor;
-        this.underflowColor = typeof config.underflowColor === "undefined" ? this.underflowColor : config.underflowColor;
-        this.showTickLabels = typeof config.showTickLabels === "undefined" ? this.showTickLabels : config.showTickLabels;
-        this.tickModulus = typeof config.tickModulus === "undefined" ? this.tickModulus : config.tickModulus;
-    }
+
 
     error(message) {
         console.log("ERROR: " + message);
