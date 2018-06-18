@@ -1,6 +1,6 @@
 # Gauge Proof of Concept v0.1b
 
-## [Live Example](#)
+[Live Example](#)
 
 ## Triggers
 
