@@ -26,7 +26,8 @@
 | `tickModulus` | `10` | Any natural number | The frequency of the tick label using tickValue % tickModulus = 0 |
 | `data` | *None* | Any real number | The data to show in the gauge. |
 | `debug` | `undefined` | Anything | Triggers the debug. If it's not defined the debug is off. Otherwise it's on. |
-| `background` | `#000` | Any color in the hex/rgb/rgba format. | Sets the background of the gauge. |
+| `background` | `rgba(0,0,0,0)` | Any color in the hex/rgb/rgba format. | Sets the background of the gauge. |
+| `backgroundFill` | `"maxDegrees"` | `"maxDegrees"` or `"full"` | Sets the behavior of the background. |
 
 ## Methods
 

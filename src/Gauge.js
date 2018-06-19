@@ -49,11 +49,13 @@ update() {
         let startAngle = orientation * Math.PI/180;
         let endAngle;
 
+        let endDegrees = this.backgroundFill === "full" ? 360 : this.maxDegrees;
+
         if(this.data > 0) {
-            endAngle = (orientation + this.maxDegrees) * Math.PI/180;
+            endAngle = (orientation + endDegrees) * Math.PI/180;
         }
         else {
-            endAngle = (orientation - this.maxDegrees) * Math.PI/180;
+            endAngle = (orientation - endDegrees) * Math.PI/180;
         }
 
         let arc = d3.arc().innerRadius(thicknessBase - this.offset - thicknessBase * this.thickness / 10)
@@ -322,6 +324,7 @@ setDefaults() {
     this.showTickLabels = false;
     this.tickModulus = 10;
     this.background = "rgba(0,0,0,0)";
+    this.backgroundFill = "maxDegrees";
 }
 
 setConfig(config) {
@@ -347,6 +350,7 @@ setConfig(config) {
     this.showTickLabels = typeof config.showTickLabels === "undefined" ? this.showTickLabels : config.showTickLabels;
     this.tickModulus = typeof config.tickModulus === "undefined" ? this.tickModulus : config.tickModulus;
     this.background = typeof config.background === "undefined" ? this.background : config.background;
+    this.backgroundFill = typeof config.backgroundFill === "undefined" ? this.backgroundFill : config.backgroundFill;
 }
 
 error(message) {
@@ -376,6 +380,7 @@ toString() {
     console.log("Show Tick Labels: " + this.showTickLabels);
     console.log("Tick Modulus: " + this.tickModulus);
     console.log("Background: " + this.background);
+    console.log("Background Fill: " + this.backgroundFill);
     console.log();
 }
 
@@ -536,6 +541,13 @@ varsHasErrors() {
     if(typeof this.background  === "undefined") {
         if(typeof this.debug !== "undefined") {
             this.error("background  must be set");
+        }
+        hasErrors = true;
+    }
+
+    if(typeof this.backgroundFill  === "undefined") {
+        if(typeof this.debug !== "undefined") {
+            this.error("backgroundFill  must be set");
         }
         hasErrors = true;
     }
