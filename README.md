@@ -52,10 +52,10 @@ Most of the settings have a default, but at the very least you need to set the `
 ```
 let gauge = new Gauge();
 gauge.rootElement("gauge");
-gauge.config(
+gauge.config({
         data: 40,
         color: "#444",
         debug: true
-);
+});
 gauge.update();
 ```
