@@ -37,8 +37,8 @@ class Gauge {
                 endAngle = (vars.orientation  - vars.tick + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
             }
 
-            let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
-            .outerRadius(vars.thicknessBase - this.offset)
+            let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - this.marginOffset - vars.thicknessBase * this.thickness / 10)
+            .outerRadius(vars.thicknessBase - this.offset - this.marginOffset)
             .startAngle(startAngle)
             .endAngle(endAngle);
 
@@ -103,12 +103,12 @@ class Gauge {
         element.node().innerHTML = "";
 
         element.node().style.width = this.width + "px";
-        element.node().style.height = (this.height * 3) + "px";
+        element.node().style.height = this.height + "px";
 
         this.svg = element.append("svg")
                         .attr("id", this.rootElement + "-svg")
                         .attr("width", this.width)
-                        .attr("height", this.height * 3);
+                        .attr("height", this.height);
         return element;
     }
 
@@ -128,8 +128,8 @@ class Gauge {
             endAngle = (vars.orientation - endDegrees) * Math.PI/180;
         }
 
-        let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
-        .outerRadius(vars.thicknessBase - this.offset)
+        let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - this.marginOffset - vars.thicknessBase * this.thickness / 10)
+        .outerRadius(vars.thicknessBase - this.offset - this.marginOffset)
         .startAngle(startAngle)
         .endAngle(endAngle);
 
@@ -189,6 +189,7 @@ class Gauge {
         this.tickModulus = 10;
         this.background = "rgba(0,0,0,0)";
         this.backgroundFill = "maxDegrees";
+        this.marginOffset = 50;
     }
 
     /*
