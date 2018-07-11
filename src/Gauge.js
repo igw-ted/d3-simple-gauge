@@ -17,12 +17,12 @@ class Gauge {
 
         let vars = this.prepareVars();
 
-        if(typeof this.background !== "undefined") {
-            this.drawBackground(vars);
-        }
-
         if(typeof this.tickModulus !== "undefined") {
             this.drawTicks(vars);
+        }
+
+        if(typeof this.background !== "undefined") {
+            this.drawBackground(vars);
         }
 
         for(let i = 0; i < Math.abs(vars.data / this.tickSize); i++) {
@@ -37,8 +37,8 @@ class Gauge {
                 endAngle = (vars.orientation  - vars.tick + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
             }
 
-            let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - this.marginOffset - vars.thicknessBase * this.thickness / 10)
-            .outerRadius(vars.thicknessBase - this.offset - this.marginOffset)
+            let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
+            .outerRadius(vars.thicknessBase - this.offset)
             .startAngle(startAngle)
             .endAngle(endAngle);
 
@@ -59,7 +59,7 @@ class Gauge {
      prepareVars() {
          let element = this.createRootElements();
 
-         let thicknessBase = Math.min(this.width, this.height) * 0.5;
+         let thicknessBase = Math.min(this.width, this.height) * 0.3;
          let tick = (this.maxDegrees) / (this.maxValue / this.tickSize);
 
          let data = this.data;
@@ -128,8 +128,8 @@ class Gauge {
             endAngle = (vars.orientation - endDegrees) * Math.PI/180;
         }
 
-        let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - this.marginOffset - vars.thicknessBase * this.thickness / 10)
-        .outerRadius(vars.thicknessBase - this.offset - this.marginOffset)
+        let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
+        .outerRadius(vars.thicknessBase - this.offset)
         .startAngle(startAngle)
         .endAngle(endAngle);
 
@@ -143,7 +143,31 @@ class Gauge {
      *  Draw the ticks, if requested.
      */
     drawTicks(vars) {
+        this.drawLine(this.width/2.8 * -1, 0, 3);
+        this.drawLine(0, this.width/2.8 * -1, 3);
+        this.drawLine(this.width/2.8, 0, 3);
+        this.drawLine(0, this.width/2.8, 3);
 
+        let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", 0);
+        circle.setAttribute("cy", 0);
+        circle.setAttribute("r", 125);
+        circle.setAttribute("fill", this.tickCoverColor);
+        circle.setAttribute("transform", "translate(" + this.width/2 + "," + this.height/2 + ")");
+
+        let svg = d3.select("#" + this.rootElement + "-svg").node();
+        svg.appendChild(circle);
+
+    }
+
+    drawLine(x,y,thickness) {
+        let line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("d", "M0,0" + "L" + x + "," + y);
+        line.setAttribute("stroke", this.tickColor);
+        line.setAttribute("transform", "translate(" + this.width/2 + "," + this.height/2 + ")");
+        line.setAttribute("stroke-width", thickness)
+        let svg = d3.select("#" + this.rootElement + "-svg").node();
+        svg.appendChild(line);
     }
 
     /*
@@ -169,8 +193,8 @@ class Gauge {
      *  Set default values.
      */
     setDefaults() {
-        this.width = 300;
-        this.height = 300;
+        this.width = 400;
+        this.height = 400;
         this.thickness = 3;
         this.tickSize = 1;
         this.tickThickness = 3;
@@ -186,10 +210,11 @@ class Gauge {
         this.overflowColor = "#aaa";
         this.underflowColor = "#aaa";
         this.showTickLabels = false;
-        this.tickModulus = 10;
         this.background = "rgba(0,0,0,0)";
         this.backgroundFill = "maxDegrees";
         this.marginOffset = 50;
+        this.tickColor = "#000";
+        this.tickCoverColor = "#fff";
     }
 
     /*
@@ -219,5 +244,7 @@ class Gauge {
         this.tickModulus = typeof config.tickModulus === "undefined" ? this.tickModulus : config.tickModulus;
         this.background = typeof config.background === "undefined" ? this.background : config.background;
         this.backgroundFill = typeof config.backgroundFill === "undefined" ? this.backgroundFill : config.backgroundFill;
+        this.tickColor = typeof config.tickColor === "undefined" ? this.tickColor : config.tickColor;
+        this.tickCoverColor = typeof config.tickCoverColor === "undefined" ? this.tickCoverColor : config.tickCoverColor;
     }
 }

@@ -6,8 +6,8 @@
         <script src="Gauge.js" charset="utf-8"></script>
         <style media="screen">
         #base {
-          width: 300;
-          height: 300;
+          width: 400;
+          height: 400;
           position: relative;
         }
 
@@ -32,14 +32,17 @@
                 rootElement: "temp1",
                 labelElement: "temp1-label",
                 data: 40,
-                thickness: 2,
+                thickness: 2.4,
                 tickThickness: 2,
                 maxDegrees: 180,
                 minValue: -50,
                 maxValue: 50,
                 orientation: temp1.orientationVar().WEST,
                 background: "rgba(0,0,0,0.1)",
-                backgroundFill: "full"
+                backgroundFill: "full",
+                tickModulus: 3,
+                tickColor: "rgba(0,0,0,0.3)",
+                tickCoverColor: "#fff"
             });
             temp1.update();
 
@@ -48,7 +51,7 @@
                 rootElement: "temp2",
                 labelElement: "temp2-label",
                 offset: 32,
-                thickness: 2,
+                thickness: 2.4,
                 tickThickness: 2,
                 data: 40,
                 maxDegrees: 180,
@@ -61,8 +64,8 @@
                 rootElement: "temp3",
                 labelElement: "temp3-label",
                 data: 40,
-                offset: 65,
-                thickness: 2,
+                offset: 64,
+                thickness: 2.4,
                 tickThickness: 2,
                 maxDegrees: 180,
                 orientation: temp1.orientationVar().WEST,

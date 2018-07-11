@@ -34,7 +34,6 @@
 | Method | Possible Input Variables | Description | Example |
 |-|-|-|-|
 | `setConfig()` | An object of configs | You can add your configs by passing an object of configs to the `setConfig()` method. | `setConfig({width: 400, offset: 20, unit: "%"})` |
-| `setNN()` | New values for variables. | NN meaning any of the variables above. | `setData(23)` |
 | `update()` | *None* | Call this to update the view. | `SetData(25); update();` |
 | `setDebug()` | *None* | Call this to enable debug. | - |
 | `unsetDebug()` | *None* | Call this to unset debug. | - |
