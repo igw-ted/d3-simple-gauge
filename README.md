@@ -28,6 +28,9 @@
 | `debug` | `undefined` | Anything | Triggers the debug. If it's not defined the debug is off. Otherwise it's on. |
 | `background` | `rgba(0,0,0,0)` | Any color in the hex/rgb/rgba format. | Sets the background of the gauge. |
 | `backgroundFill` | `"maxDegrees"` | `"maxDegrees"` or `"full"` | Sets the behavior of the background. |
+| `tickColor` | `#aaa` | Any color in the hex/rgb/rgba format. | Sets the color of the ticks. |
+| `tickColor` | `#aaa` | Any color in the hex/rgb/rgba format. | The tick lines goes all the way into the center and is covered by a filled circle. This sets the color of that filled circle. |
+
 
 ## Methods
 

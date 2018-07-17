@@ -29,6 +29,8 @@
         <script type="text/javascript">
             let temp1 = new Gauge();
             temp1.setConfig({
+                width: 400,
+                height: 400,
                 rootElement: "temp1",
                 labelElement: "temp1-label",
                 data: 40,
@@ -40,14 +42,19 @@
                 orientation: temp1.orientationVar().WEST,
                 background: "rgba(0,0,0,0.1)",
                 backgroundFill: "full",
-                tickModulus: 3,
-                tickColor: "rgba(0,0,0,0.3)",
-                tickCoverColor: "#fff"
+                tickModulus: 5,
+                bigTickModulus: 10,
+                tickColor: "#aaa",
+                tickCoverColor: "#fff",
+                tickLabelColor: "#000",
+                tickLabelSize: 14
             });
             temp1.update();
 
               let temp2 = new Gauge();
             temp2.setConfig({
+                width: 400,
+                height: 400,
                 rootElement: "temp2",
                 labelElement: "temp2-label",
                 offset: 32,
@@ -61,6 +68,8 @@
 
               let temp3 = new Gauge();
             temp3.setConfig({
+                width: 400,
+                height: 400,
                 rootElement: "temp3",
                 labelElement: "temp3-label",
                 data: 40,

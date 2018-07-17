@@ -25,12 +25,14 @@ class Gauge {
             this.drawBackground(vars);
         }
 
-        for(let i = 0; i < Math.abs(vars.data / this.tickSize); i++) {
+        for(let i = 0; i <= Math.abs(vars.data / this.tickSize); i++) {
             let startAngle, endAngle;
 
+            let offset = 1; // tiny offset to get the steps in the middle of the ticks.
+
             if(vars.data > 0) {
-                startAngle = (vars.orientation + (vars.tick * i)) * Math.PI/180;
-                endAngle = (vars.orientation + (vars.tick * i) + this.tickThickness) * Math.PI/180;
+                startAngle = (vars.orientation - 1 + (vars.tick * i)) * Math.PI/180;
+                endAngle = (vars.orientation - 1 + (vars.tick * i) + this.tickThickness) * Math.PI/180;
             }
             else {
                 startAngle = (vars.orientation - vars.tick + (vars.tick * i * -1)) * Math.PI/180;
@@ -76,13 +78,6 @@ class Gauge {
          }
 
          let orientation = this.orientation;
-
-         switch(orientation) {
-             case "north": orientation = 0; break;
-             case "south": orientation = 180; break;
-             case "east": orientation = 90; break;
-             case "west": orientation = -90; break;
-         }
 
          return {
              element: element,
@@ -143,15 +138,48 @@ class Gauge {
      *  Draw the ticks, if requested.
      */
     drawTicks(vars) {
-        this.drawLine(this.width/2.8 * -1, 0, 3);
-        this.drawLine(0, this.width/2.8 * -1, 3);
-        this.drawLine(this.width/2.8, 0, 3);
-        this.drawLine(0, this.width/2.8, 3);
+
+        let angleDiff = Math.abs(this.maxDegrees);
+
+        let ticksPerAngle = angleDiff/this.maxValue;
+
+        for(let i = 0; i <= this.maxValue; i++) {
+            if(i % this.tickModulus == 0) {
+                let angle = (this.maxDegrees / this.maxValue) * i;
+                this.drawLine(angle, 1, 0);
+            }
+        }
+
+        for(let i = 0; i <= this.maxValue; i++) {
+            if(i % this.bigTickModulus == 0) {
+                let angle = (this.maxDegrees / this.maxValue) * i;
+                this.drawLine(angle, 3, 1);
+                this.drawTickLabels(angle, i + this.unit);
+            }
+        }
+
+        if(this.minValue < 0) {
+            for(let i = this.minValue; i <= 0; i++) {
+                if(i % this.tickModulus == 0) {
+                    let angle = (this.maxDegrees / this.maxValue) * i;
+                    this.drawLine(angle, 1, 0);
+                }
+            }
+
+            for(let i = this.minValue; i <= 0; i++) {
+                if(i % this.bigTickModulus == 0) {
+                    let angle = (this.maxDegrees / this.maxValue) * i;
+                    this.drawLine(angle, 3, 1);
+                    this.drawTickLabels(angle, i + this.unit);
+                }
+            }
+        }
+
 
         let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", 0);
         circle.setAttribute("cy", 0);
-        circle.setAttribute("r", 125);
+        circle.setAttribute("r", this.width/3.2);
         circle.setAttribute("fill", this.tickCoverColor);
         circle.setAttribute("transform", "translate(" + this.width/2 + "," + this.height/2 + ")");
 
@@ -160,14 +188,62 @@ class Gauge {
 
     }
 
-    drawLine(x,y,thickness) {
+    drawLine(angle,thickness, length) {
+
+        angle = angle * -1; // Need to change the orientation.
+
+        let radius = this.width/(3 - length/10);
+        let x1 = Math.cos((90 - this.orientation + angle) * Math.PI/180) * radius;
+        let y1 = -1 * Math.sin((90 - this.orientation + angle) * Math.PI/180) * radius;
+
         let line = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        line.setAttribute("d", "M0,0" + "L" + x + "," + y);
+        line.setAttribute("d", "M0,0" + "L" + x1 + "," + y1);
         line.setAttribute("stroke", this.tickColor);
         line.setAttribute("transform", "translate(" + this.width/2 + "," + this.height/2 + ")");
         line.setAttribute("stroke-width", thickness)
         let svg = d3.select("#" + this.rootElement + "-svg").node();
         svg.appendChild(line);
+    }
+
+    drawTickLabels(angle, text) {
+
+        angle = angle * -1;
+
+        let radius, x, y;
+
+        if(angle < -1) {
+            radius = this.width/(2.5) + 10;
+            x = Math.cos((90 - this.orientation + angle) * Math.PI/180) * radius;
+            y = -1 * Math.sin((90 - this.orientation + angle) * Math.PI/180) * radius;
+        }
+        else {
+            radius = this.width/(2.5) + 10;
+            x = Math.cos((90 - this.orientation + angle) * Math.PI/180) * radius;
+            y = -1 * Math.sin((90 - this.orientation + angle) * Math.PI/180) * radius;
+        }
+
+        let transformX = (this.width + ((this.width/100) * -3)) / 2;
+        let transformY = (this.height + ((this.height/100) * 2)) / 2;
+
+        let textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textElement.setAttribute("x", x);
+        textElement.setAttribute("y", y);
+        textElement.style.fontSize = this.tickLabelSize + "px";
+        textElement.setAttribute("transform", "translate(" + transformX + "," + transformY + ")");
+        textElement.style.fill = this.tickLabelColor;
+        textElement.textContent = text;
+
+        if(Math.ceil(Math.abs(angle)) === this.maxDegrees) {
+            if(angle < 0) {
+                textElement.setAttribute("x", textElement.getAttribute("x"));
+            }
+            else {
+
+            }
+        }
+
+        let svg = d3.select("#" + this.rootElement + "-svg").node();
+        svg.appendChild(textElement);
     }
 
     /*
@@ -182,10 +258,10 @@ class Gauge {
      */
     orientationVar() {
         return {
-            NORTH: "north",
-            SOUTH: "south",
-            EAST: "east",
-            WEST: "west"
+            NORTH: 0,
+            SOUTH: 180,
+            EAST: 90,
+            WEST: 270
         }
     }
 
@@ -215,6 +291,8 @@ class Gauge {
         this.marginOffset = 50;
         this.tickColor = "#000";
         this.tickCoverColor = "#fff";
+        this.tickLabelSize = "11px";
+        this.tickLabelColor = "#000";
     }
 
     /*
@@ -242,9 +320,12 @@ class Gauge {
         this.underflowColor = typeof config.underflowColor === "undefined" ? this.underflowColor : config.underflowColor;
         this.showTickLabels = typeof config.showTickLabels === "undefined" ? this.showTickLabels : config.showTickLabels;
         this.tickModulus = typeof config.tickModulus === "undefined" ? this.tickModulus : config.tickModulus;
+        this.bigTickModulus = typeof config.bigTickModulus === "undefined" ? this.bigTickModulus : config.bigTickModulus;
         this.background = typeof config.background === "undefined" ? this.background : config.background;
         this.backgroundFill = typeof config.backgroundFill === "undefined" ? this.backgroundFill : config.backgroundFill;
         this.tickColor = typeof config.tickColor === "undefined" ? this.tickColor : config.tickColor;
         this.tickCoverColor = typeof config.tickCoverColor === "undefined" ? this.tickCoverColor : config.tickCoverColor;
+        this.tickLabelColor = typeof config.tickLabelColor === "undefined" ? this.tickLabelColor : config.tickLabelColor;
+        this.tickLabelSize = typeof config.tickLabelSize === "undefined" ? this.tickLabelSize : config.tickLabelSize;
     }
 }
