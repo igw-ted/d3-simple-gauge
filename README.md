@@ -36,6 +36,7 @@
 | `tickOffset` | `1` | Any number. | Offset the data in the gauge. Good for aligning the data with the ticks in different ways. Could also be used to animate the gauge while waiting for data. |
 | `tickLabelFontFamily` | `"monospace"` | Any font family. | The font family for the tick lables. |
 | `tickLabelSize` | `11px` | Any font size in any unit. | The font size for the tick lables. |
+| `dataFillType` | `"undefined"` | Any value. | If set, the data will displayed with a needle instead of a filling gauge. |
 
 
 ## Methods
