@@ -40,14 +40,16 @@
                 minValue: -50,
                 maxValue: 50,
                 orientation: temp1.orientationVar().WEST,
-                background: "rgba(0,0,0,0.1)",
+                background: "rgba(0,0,0,0.09)",
                 backgroundFill: "full",
-                tickModulus: 5,
+                tickModulus: 1,
                 bigTickModulus: 10,
                 tickColor: "#aaa",
                 tickCoverColor: "#fff",
                 tickLabelColor: "#000",
-                tickLabelSize: 14
+                tickLabelSize: 12,
+                unit: "%",
+                tickLabelFontFamily: "monospace"
             });
             temp1.update();
 
@@ -62,7 +64,8 @@
                 tickThickness: 2,
                 data: 40,
                 maxDegrees: 180,
-                orientation: temp1.orientationVar().WEST
+                orientation: temp1.orientationVar().WEST,
+                background: "rgba(0,0,0,0.17)"
             });
             temp2.update();
 
@@ -78,7 +81,8 @@
                 tickThickness: 2,
                 maxDegrees: 180,
                 orientation: temp1.orientationVar().WEST,
-                color: "#444"
+                color: "#444",
+                background: "rgba(0,0,0,0.24)",
             });
             temp3.update();
 

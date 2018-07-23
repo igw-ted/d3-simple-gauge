@@ -188,7 +188,7 @@ class Gauge {
 
     }
 
-    drawLine(angle,thickness, length) {
+    drawLine(angle, thickness, length) {
 
         angle = angle * -1; // Need to change the orientation.
 
@@ -231,6 +231,7 @@ class Gauge {
         textElement.style.fontSize = this.tickLabelSize + "px";
         textElement.setAttribute("transform", "translate(" + transformX + "," + transformY + ")");
         textElement.style.fill = this.tickLabelColor;
+        textElement.style.fontFamily = this.tickLabelFontFamily;
         textElement.textContent = text;
 
         if(Math.ceil(Math.abs(angle)) === this.maxDegrees) {
@@ -293,6 +294,7 @@ class Gauge {
         this.tickCoverColor = "#fff";
         this.tickLabelSize = "11px";
         this.tickLabelColor = "#000";
+        this.tickLabelFontFamily = "monospace";
     }
 
     /*
@@ -327,5 +329,6 @@ class Gauge {
         this.tickCoverColor = typeof config.tickCoverColor === "undefined" ? this.tickCoverColor : config.tickCoverColor;
         this.tickLabelColor = typeof config.tickLabelColor === "undefined" ? this.tickLabelColor : config.tickLabelColor;
         this.tickLabelSize = typeof config.tickLabelSize === "undefined" ? this.tickLabelSize : config.tickLabelSize;
+        this.tickLabelFontFamily = typeof config.tickLabelFontFamily === "undefined" ? this.tickLabelFontFamily : config.tickLabelFontFamily;
     }
 }
