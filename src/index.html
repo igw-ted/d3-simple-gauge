@@ -37,23 +37,26 @@
                 height: 400,
                 rootElement: "gauge270",
                 labelElement: "gauge270-label",
-                data: 75,
+                data: 50,
                 thickness: 2.4,
-                tickThickness: 3,
+                tickThickness: 2,
                 maxDegrees: 270,
                 minValue: 0,
                 maxValue: 100,
                 orientation: 225,
                 background: "rgba(0,0,0,0.09)",
-                tickModulus: 2,
+                tickModulus: 5,
                 bigTickModulus: 10,
                 tickColor: "#aaa",
-                tickOffset: 2.2,
+                color: "#000",
+                tickOffset: 1,
                 tickCoverColor: "#fff",
+                tickCoverRadius: 3.35,
                 tickLabelColor: "#000",
                 tickLabelSize: 12,
                 unit: "%",
-                tickLabelFontFamily: "monospace"
+                tickLabelFontFamily: "monospace",
+                dataFillType: "needle"
             });
             base270.update();
 

@@ -25,36 +25,54 @@ class Gauge {
         if(typeof this.background !== "undefined") {
             this.drawBackground(vars);
         }
+        if(typeof this.dataFillType === "undefined") {
+            for(let i = 0; i <= Math.abs(vars.data / this.tickSize); i++) {
+                let startAngle, endAngle
 
-        for(let i = 0; i <= Math.abs(vars.data / this.tickSize); i++) {
-            let startAngle, endAngle
+                if(vars.data > 0) {
+                    startAngle = (vars.orientation - this.tickOffset + (vars.tick * i)) * Math.PI/180;
+                    endAngle = (vars.orientation - this.tickOffset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
+                }
+                else {
+                    startAngle = (vars.orientation - this.tickOffset + (vars.tick * i * -1)) * Math.PI/180;
+                    endAngle = (vars.orientation  - this.tickOffset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
+                }
 
-            let offset = this.tickOffset; // tiny offset to get the steps in the middle of the ticks.
-            console.log(offset)
+                this.appendArc(startAngle, endAngle, vars, i);
+
+            }
+        }
+        else {
+
+            let i = Math.abs(vars.data / this.tickSize);
+            let startAngle, endAngle;
 
             if(vars.data > 0) {
-                startAngle = (vars.orientation - offset + (vars.tick * i)) * Math.PI/180;
-                endAngle = (vars.orientation - offset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
+                startAngle = (vars.orientation - this.tickOffset + (vars.tick * i)) * Math.PI/180;
+                endAngle = (vars.orientation - this.tickOffset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
             }
             else {
-                startAngle = (vars.orientation - offset + (vars.tick * i * -1)) * Math.PI/180;
-                endAngle = (vars.orientation  - offset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
+                startAngle = (vars.orientation - this.tickOffset + (vars.tick * i * -1)) * Math.PI/180;
+                endAngle = (vars.orientation  - this.tickOffset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
             }
 
-            let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
-            .outerRadius(vars.thicknessBase - this.offset)
-            .startAngle(startAngle)
-            .endAngle(endAngle);
-
-            this.svg.append("path")
-            .attr("id", "arc-" + i)
-            .attr("d", arc)
-            .attr("transform", "translate(" + this.width/2 + "," + this.height/2 + ")")
-            .attr("fill", vars.color);
-
+            this.appendArc(startAngle, endAngle, vars, i);
         }
 
         this.populateLabels();
+    }
+
+    appendArc(startAngle, endAngle, vars, offset, i) {
+        let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
+        .outerRadius(vars.thicknessBase - this.offset)
+        .startAngle(startAngle)
+        .endAngle(endAngle);
+
+        this.svg.append("path")
+        .attr("id", "arc-" + i)
+        .attr("d", arc)
+        .attr("transform", "translate(" + this.width/2 + "," + this.height/2 + ")")
+        .attr("fill", vars.color);
     }
 
     /*
@@ -336,5 +354,6 @@ class Gauge {
         this.tickLabelFontFamily = typeof config.tickLabelFontFamily === "undefined" ? this.tickLabelFontFamily : config.tickLabelFontFamily;
         this.tickOffset = typeof config.tickOffset === "undefined" ? this.tickOffset : config.tickOffset;
         this.tickCoverRadius = typeof config.tickCoverRadius === "undefined" ? this.tickCoverRadius : config.tickCoverRadius;
+        this.dataFillType = typeof config.dataFillType === "undefined" ? this.dataFillType : config.dataFillType;
     }
 }
