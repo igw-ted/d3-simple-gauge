@@ -23,13 +23,18 @@
 | `overflowColor` | `"#aaa"` | Any color in the hex/rgb/rgba format. | The color to fill an overflowed gauge with. |
 | `underflowColor` | `"#aaa"` | Any color in the hex/rgb/rgba format. | The color to fill an underflowed gauge with. |
 | `showTickLabels` | `false` | [true false] | Whether or not to show tick labels. |
-| `tickModulus` | `10` | Any natural number | The frequency of the tick label using tickValue % tickModulus = 0 |
+| `tickModulus` | `2` | Any natural number | The frequency of the tick label using tickValue % tickModulus = 0 |
+| `bigTickModulus` | `10` | Any natural number | The frequency of the tick label using tickValue % tickModulus = 0 |
 | `data` | *None* | Any real number | The data to show in the gauge. |
 | `debug` | `undefined` | Anything | Triggers the debug. If it's not defined the debug is off. Otherwise it's on. |
 | `background` | `rgba(0,0,0,0)` | Any color in the hex/rgb/rgba format. | Sets the background of the gauge. |
 | `backgroundFill` | `"maxDegrees"` | `"maxDegrees"` or `"full"` | Sets the behavior of the background. |
 | `tickColor` | `#aaa` | Any color in the hex/rgb/rgba format. | Sets the color of the ticks. |
-| `tickColor` | `#aaa` | Any color in the hex/rgb/rgba format. | The tick lines goes all the way into the center and is covered by a filled circle. This sets the color of that filled circle. |
+| `tickCoverColor` | `#aaa` | Any color in the hex/rgb/rgba format. | The tick lines goes all the way into the center and is covered by a filled circle. This sets the color of that filled circle. |
+| `tickLabelColor` | `#000` | Any color in the hex/rgb/rgba format. | The color of the tick lables. |
+| `tickOffset` | `1` | Any integer. | Offset the data in the gauge. Good for aligning the data with the ticks in different ways. Could also be used to animate the gauge while waiting for data. |
+| `tickLabelFontFamily` | `"monospace"` | Any font family. | The font family for the tick lables. |
+| `tickLabelSize` | `11px` | Any font size in any unit. | The font size for the tick lables. |
 
 
 ## Methods

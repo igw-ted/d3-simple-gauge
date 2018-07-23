@@ -26,17 +26,18 @@ class Gauge {
         }
 
         for(let i = 0; i <= Math.abs(vars.data / this.tickSize); i++) {
-            let startAngle, endAngle;
+            let startAngle, endAngle
 
-            let offset = 1; // tiny offset to get the steps in the middle of the ticks.
+            let offset = this.tickOffset; // tiny offset to get the steps in the middle of the ticks.
+            console.log(offset)
 
             if(vars.data > 0) {
-                startAngle = (vars.orientation - 1 + (vars.tick * i)) * Math.PI/180;
-                endAngle = (vars.orientation - 1 + (vars.tick * i) + this.tickThickness) * Math.PI/180;
+                startAngle = (vars.orientation - offset + (vars.tick * i)) * Math.PI/180;
+                endAngle = (vars.orientation - offset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
             }
             else {
-                startAngle = (vars.orientation - vars.tick + (vars.tick * i * -1)) * Math.PI/180;
-                endAngle = (vars.orientation  - vars.tick + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
+                startAngle = (vars.orientation - offset + (vars.tick * i * -1)) * Math.PI/180;
+                endAngle = (vars.orientation  - offset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
             }
 
             let arc = d3.arc().innerRadius(vars.thicknessBase - this.offset - vars.thicknessBase * this.thickness / 10)
@@ -228,7 +229,7 @@ class Gauge {
         let textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textElement.setAttribute("x", x);
         textElement.setAttribute("y", y);
-        textElement.style.fontSize = this.tickLabelSize + "px";
+        textElement.style.fontSize = this.tickLabelSize;
         textElement.setAttribute("transform", "translate(" + transformX + "," + transformY + ")");
         textElement.style.fill = this.tickLabelColor;
         textElement.style.fontFamily = this.tickLabelFontFamily;
@@ -295,6 +296,7 @@ class Gauge {
         this.tickLabelSize = "11px";
         this.tickLabelColor = "#000";
         this.tickLabelFontFamily = "monospace";
+        this.tickOffset = 1;
     }
 
     /*
@@ -330,5 +332,6 @@ class Gauge {
         this.tickLabelColor = typeof config.tickLabelColor === "undefined" ? this.tickLabelColor : config.tickLabelColor;
         this.tickLabelSize = typeof config.tickLabelSize === "undefined" ? this.tickLabelSize : config.tickLabelSize;
         this.tickLabelFontFamily = typeof config.tickLabelFontFamily === "undefined" ? this.tickLabelFontFamily : config.tickLabelFontFamily;
+        this.tickOffset = typeof config.tickOffset === "undefined" ? this.tickOffset : config.tickOffset;
     }
 }
