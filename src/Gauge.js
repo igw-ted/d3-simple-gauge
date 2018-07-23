@@ -19,6 +19,7 @@ class Gauge {
 
         if(typeof this.tickModulus !== "undefined") {
             this.drawTicks(vars);
+            this.drawTickBackground();
         }
 
         if(typeof this.background !== "undefined") {
@@ -175,18 +176,18 @@ class Gauge {
                 }
             }
         }
+    }
 
-
+    drawTickBackground() {
         let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", 0);
         circle.setAttribute("cy", 0);
-        circle.setAttribute("r", this.width/3.2);
+        circle.setAttribute("r", this.width/this.tickCoverRadius);
         circle.setAttribute("fill", this.tickCoverColor);
         circle.setAttribute("transform", "translate(" + this.width/2 + "," + this.height/2 + ")");
 
         let svg = d3.select("#" + this.rootElement + "-svg").node();
         svg.appendChild(circle);
-
     }
 
     drawLine(angle, thickness, length) {
@@ -297,6 +298,7 @@ class Gauge {
         this.tickLabelColor = "#000";
         this.tickLabelFontFamily = "monospace";
         this.tickOffset = 1;
+        this.tickCoverRadius = 3.2;
     }
 
     /*
@@ -333,5 +335,6 @@ class Gauge {
         this.tickLabelSize = typeof config.tickLabelSize === "undefined" ? this.tickLabelSize : config.tickLabelSize;
         this.tickLabelFontFamily = typeof config.tickLabelFontFamily === "undefined" ? this.tickLabelFontFamily : config.tickLabelFontFamily;
         this.tickOffset = typeof config.tickOffset === "undefined" ? this.tickOffset : config.tickOffset;
+        this.tickCoverRadius = typeof config.tickCoverRadius === "undefined" ? this.tickCoverRadius : config.tickCoverRadius;
     }
 }

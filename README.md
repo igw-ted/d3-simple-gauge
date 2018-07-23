@@ -31,8 +31,9 @@
 | `backgroundFill` | `"maxDegrees"` | `"maxDegrees"` or `"full"` | Sets the behavior of the background. |
 | `tickColor` | `#aaa` | Any color in the hex/rgb/rgba format. | Sets the color of the ticks. |
 | `tickCoverColor` | `#aaa` | Any color in the hex/rgb/rgba format. | The tick lines goes all the way into the center and is covered by a filled circle. This sets the color of that filled circle. |
+| `tickCoverRadius` | `3.2` | Any number. | The tick lines goes all the way into the center and is covered by a filled circle. This sets the radius of that circle. |
 | `tickLabelColor` | `#000` | Any color in the hex/rgb/rgba format. | The color of the tick lables. |
-| `tickOffset` | `1` | Any integer. | Offset the data in the gauge. Good for aligning the data with the ticks in different ways. Could also be used to animate the gauge while waiting for data. |
+| `tickOffset` | `1` | Any number. | Offset the data in the gauge. Good for aligning the data with the ticks in different ways. Could also be used to animate the gauge while waiting for data. |
 | `tickLabelFontFamily` | `"monospace"` | Any font family. | The font family for the tick lables. |
 | `tickLabelSize` | `11px` | Any font size in any unit. | The font size for the tick lables. |
 
