@@ -81,8 +81,9 @@ Most of the settings have a default, but at the very least you need to set the `
 **JS**
 ```
 let gauge = new Gauge();
-gauge.rootElement("gauge");
 gauge.config({
+        rootElement: "gauge",
+        labelElement: "gauge-label",
         data: 40,
         color: "#444",
         debug: true
