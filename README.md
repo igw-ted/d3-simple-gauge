@@ -10,6 +10,28 @@ It's a basic gauge powered by D3. Some features are negative numbers, overflow c
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](https://raw.githubusercontent.com/igw-ted/gauge-poc/master/dist/Gauge.min.js)
 
+## How To Use
+
+Most of the settings have a default, but at the very least you need to set the `rootElement` and something to add into the `data` variable. If you plan to show labels, you need to set the `labelElement` and add the unit you plan to use, if any, to `unit` as well.
+
+**HTML**    
+```
+<div id="gauge"></div>
+```
+
+**JS**
+```
+let gauge = new Gauge();
+gauge.config({
+        rootElement: "gauge",
+        labelElement: "gauge-label",
+        data: 40,
+        color: "#444",
+        debug: true
+});
+gauge.update();
+```
+
 ## Dependencies
 
 * D3 >= v4
@@ -77,25 +99,3 @@ It's a basic gauge powered by D3. Some features are negative numbers, overflow c
 |-|-|-|-|
 | `setConfig()` | An object of configs | You can add your configs by passing an object of configs to the `setConfig()` method. | `setConfig({width: 400, offset: 20, unit: "%"})` |
 | `update()` | *None* | Call this to update the view. | `SetData(25); update();` |
-
-## How To Use
-
-Most of the settings have a default, but at the very least you need to set the `rootElement` and something to add into the `data` variable. If you plan to show labels, you need to set the `labelElement` and add the unit you plan to use, if any, to `unit` as well.
-
-**HTML**    
-```
-<div id="gauge"></div>
-```
-
-**JS**
-```
-let gauge = new Gauge();
-gauge.config({
-        rootElement: "gauge",
-        labelElement: "gauge-label",
-        data: 40,
-        color: "#444",
-        debug: true
-});
-gauge.update();
-```
