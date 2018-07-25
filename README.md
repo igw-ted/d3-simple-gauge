@@ -4,8 +4,8 @@
 
 It's a basic gauge powered by D3. Some features are negative numbers, overflow color indications, as well as the wide range of customization options through variables.
 
-<img src="img/ss1.jpg" width="45%">
-<img src="img/ss2.jpg" width="48%">
+<img src="img/ss1.jpg" style="height: 200px">
+<img src="img/ss2.jpg" style="height: 200px">
 
 ## Download
 
