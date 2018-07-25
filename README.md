@@ -39,7 +39,7 @@ gauge.update();
 ## Getting Started with Development
 
 1. Get the GIT repo:  
-`git clone https://github.com/igw-ted/gauge-poc.git`
+`git clone https://github.com/igw-ted/d3-simple-gauge.git`
 
 2. In the root of the project, get the resources needed via NPM:  
 `npm install`
