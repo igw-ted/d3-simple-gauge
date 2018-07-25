@@ -4,6 +4,9 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](https://raw.githubusercontent.com/igw-ted/gauge-poc/master/dist/Gauge.min.js)
 
+## Dependencies
+
+* D3 >= v4
 
 ## Getting Started with Development
 
