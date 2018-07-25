@@ -22,7 +22,7 @@
 5. Make edits to `src/Gauge.js` and `src/index.html`, then run the dist script from the root of the project:  
 `grunt dist`
 
-6. Use the minified version for your project. It's ES5 and thus compatible to older browsers. It's also minified, so it uses less bandwidth at request.  
+6. Use the minified version for your project. It's ES5 and thus compatible with older browsers. It's also minified, so it uses less bandwidth at request.  
 `dist/Gauge.min.js`
 
 ## Triggers
