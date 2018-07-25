@@ -1,4 +1,4 @@
-# Gauge Proof of Concept v0.6
+# D3 Simple Gauge v0.6
 
 ## Download
 
