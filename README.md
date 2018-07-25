@@ -1,5 +1,12 @@
 # D3 Simple Gauge v0.6
 
+## What's This?
+
+It's a basic gauge powered by D3. Some features are negative numbers, overflow color indications, as well as the wide range of customization options through variables.
+
+![](img/ss1.jpg)
+![](img/ss2.jpg)
+
 ## Download
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](https://raw.githubusercontent.com/igw-ted/gauge-poc/master/dist/Gauge.min.js)
