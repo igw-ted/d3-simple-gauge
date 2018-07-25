@@ -1,6 +1,29 @@
-# Gauge Proof of Concept v0.1b
+# Gauge Proof of Concept v0.6
 
-[Live Example](https://codepen.io/anon/pen/aKEobv?editors=1000)
+## Download
+
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](https://raw.githubusercontent.com/igw-ted/gauge-poc/master/dist/Gauge.min.js)
+
+
+## Getting Started with Development
+
+1. Get the GIT repo:  
+`git clone https://github.com/igw-ted/gauge-poc.git`
+
+2. In the root of the project, get the resources needed via NPM:  
+`npm install`
+
+3. Start the live development server:  
+`node_modules/.bin/live-server`
+
+4. The development server runs at port 8080:  
+`http://localhost:8080/src`
+
+5. Make edits to `src/Gauge.js` and `src/index.html`, then run the dist script from the root of the project:  
+`grunt dist`
+
+6. Use the minified version for your project. It's ES5 and thus compatible to older browsers. It's also minified, so it uses less bandwidth at request.  
+`dist/Gauge.min.js`
 
 ## Triggers
 
