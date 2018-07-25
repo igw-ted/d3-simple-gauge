@@ -4,7 +4,7 @@
 
 It's a basic gauge powered by D3. Some features are negative numbers, overflow color indications, as well as the wide range of customization options through variables.
 
-<img src="img/ss1.jpg" height="250"><img src="img/ss2.jpg" height="250">
+<img src="img/ss1.jpg" height="350"><img src="img/ss2.jpg" height="350">
 
 ## Download
 
