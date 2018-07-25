@@ -28,8 +28,43 @@
         <div id="base270">
             <div id="gauge270"></div>
         </div>
+        <div id="base-spinner">
+            <div id="spinner"></div>
+        </div>
 
         <script type="text/javascript">
+            let spinner = new Gauge();
+            spinner.setConfig({
+                width: 400,
+                height: 400,
+                rootElement: "spinner",
+                labelElement: "spinner-label",
+                data: 100,
+                thickness: 2.4,
+                tickThickness: 5,
+                tickSize: 4,
+                minValue: 0,
+                maxValue: 100,
+                orientation: 0,
+                background: "rgba(0,0,0,0.09)",
+                tickModulus: 5,
+                bigTickModulus: 10,
+                tickColor: "#aaa",
+                color: "#000",
+                tickOffset: 1,
+                tickCoverColor: "#fff",
+                tickCoverRadius: 3.35,
+                tickLabelColor: "#000",
+                tickLabelSize: 12,
+                unit: "%",
+                tickLabelFontFamily: "monospace"
+            });
+            spinner.update();
+
+            setInterval(function() {
+                spinner.tickOffset = spinner.tickOffset - 2;
+                spinner.update();
+            }, 30);
 
             let base270 = new Gauge();
             base270.setConfig({
