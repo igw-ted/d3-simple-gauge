@@ -13,7 +13,7 @@
 2. In the root of the project, get the resources needed via NPM:  
 `npm install`
 
-3. Start the live development server:  
+3. From the root directory, start the live development server:  
 `node_modules/.bin/live-server`
 
 4. The development server runs at port 8080:  
