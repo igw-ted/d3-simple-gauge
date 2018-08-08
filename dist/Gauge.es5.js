@@ -37,7 +37,22 @@ var Gauge = function () {
                 this.drawBackground(vars);
             }
             if (typeof this.dataFillType === "undefined") {
-                for (var i = 0; i <= Math.abs(vars.data / this.tickSize); i++) {
+
+                var data = vars.data;
+
+                if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                    if (data > this.maxValue) {
+                        data = this.maxValue;
+                    }
+                }
+
+                if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                    if (data < this.minValue) {
+                        data = this.minValue;
+                    }
+                }
+
+                for (var i = 0; i <= Math.abs(data / this.tickSize); i++) {
                     var startAngle = void 0,
                         endAngle = void 0;
 
@@ -53,7 +68,21 @@ var Gauge = function () {
                 }
             } else {
 
-                var _i = Math.abs(vars.data / this.tickSize);
+                var _data = vars.data;
+
+                if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                    if (_data > this.maxValue) {
+                        _data = this.maxValue;
+                    }
+                }
+
+                if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                    if (_data < this.minValue) {
+                        _data = this.minValue;
+                    }
+                }
+
+                var _i = Math.abs(_data / this.tickSize);
                 var _startAngle = void 0,
                     _endAngle = void 0;
 
@@ -316,7 +345,7 @@ var Gauge = function () {
             this.unit = "";
             this.minValue = -50;
             this.maxValue = 50;
-            this.allowOverflow = true;
+            this.allowOverflow = false;
             this.allowUnderflow = true;
             this.maxDegrees = 360;
             this.color = "#aaa";
@@ -359,8 +388,8 @@ var Gauge = function () {
             this.maxDegrees = typeof config.maxDegrees === "undefined" ? this.maxDegrees : config.maxDegrees;
             this.data = typeof config.data === "undefined" ? this.data : config.data;
             this.color = typeof config.color === "undefined" ? this.color : config.color;
-            this.overflowColor = typeof config.overflowColor === "undefined" ? this.overflowColor : config.overflowColor;
-            this.underflowColor = typeof config.underflowColor === "undefined" ? this.underflowColor : config.underflowColor;
+            this.overflowColor = typeof config.overflowColor === "undefined" ? this.color : config.overflowColor;
+            this.underflowColor = typeof config.underflowColor === "undefined" ? this.color : config.underflowColor;
             this.showTickLabels = typeof config.showTickLabels === "undefined" ? this.showTickLabels : config.showTickLabels;
             this.tickModulus = typeof config.tickModulus === "undefined" ? this.tickModulus : config.tickModulus;
             this.bigTickModulus = typeof config.bigTickModulus === "undefined" ? this.bigTickModulus : config.bigTickModulus;
