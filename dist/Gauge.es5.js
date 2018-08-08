@@ -144,7 +144,7 @@ var Gauge = function () {
 
             var endDegrees = this.backgroundFill === "full" ? 360 : this.maxDegrees;
 
-            if (this.data > 0) {
+            if (this.data >= 0) {
                 endAngle = (vars.orientation + endDegrees) * Math.PI / 180;
             } else {
                 endAngle = (vars.orientation - endDegrees) * Math.PI / 180;
