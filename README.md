@@ -1,4 +1,4 @@
-# D3 Simple Gauge v0.6
+# D3 Simple Gauge v0.6.1
 
 ## What's This?
 
