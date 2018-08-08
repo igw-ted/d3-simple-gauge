@@ -293,9 +293,9 @@ var Gauge = function () {
 
             if (Math.ceil(Math.abs(angle)) === this.maxDegrees) {
                 if (angle > 0) {
-                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize);
+                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize / 4 * 3);
                 } else {
-                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize / 4 * 2 * -1);
+                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize / 4 * 4 * -1);
                 }
             }
 
