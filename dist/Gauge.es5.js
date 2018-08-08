@@ -263,7 +263,7 @@ var Gauge = function () {
             textElement.textContent = text;
 
             if (Math.ceil(Math.abs(angle)) === this.maxDegrees) {
-                if (angle < 0) {
+                if (angle > 0) {
                     textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize);
                 } else {
                     textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize / 4 * 2 * -1);
