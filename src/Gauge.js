@@ -124,8 +124,8 @@ class Gauge {
                 }
             }
 
-            this.populateLabels();
         }
+        this.populateLabels();
     }
 
     appendArc(startAngle, endAngle, vars, offset, i) {

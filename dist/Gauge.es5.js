@@ -130,9 +130,8 @@ var Gauge = function () {
                         this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data3 / this.tickSize));
                     }
                 }
-
-                this.populateLabels();
             }
+            this.populateLabels();
         }
     }, {
         key: "appendArc",
