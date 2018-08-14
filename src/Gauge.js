@@ -321,11 +321,14 @@ class Gauge {
         textElement.textContent = text;
 
         if(Math.ceil(Math.abs(angle)) === this.maxDegrees) {
-            if(angle > 0) {
-                textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize/4 * 3);
-            }
-            else {
-                textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize/4 * 4 * -1);
+                if(angle > 0) {
+                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize/4 * 3);
+                }
+                else {
+                    textElement.setAttribute("y", +textElement.getAttribute("y") + this.tickLabelSize/4 * 4 * -1);
+                }
+            if(this.tickLabelHideLast) {
+                textElement.style.display = "none";
             }
         }
 
@@ -382,6 +385,7 @@ class Gauge {
         this.tickLabelFontFamily = "monospace";
         this.tickOffset = 1;
         this.tickCoverRadius = 3.2;
+        this.tickLabelHideLast = false;
     }
 
     /*
@@ -419,5 +423,6 @@ class Gauge {
         this.tickOffset = typeof config.tickOffset === "undefined" ? this.tickOffset : config.tickOffset;
         this.tickCoverRadius = typeof config.tickCoverRadius === "undefined" ? this.tickCoverRadius : config.tickCoverRadius;
         this.dataFillType = typeof config.dataFillType === "undefined" ? this.dataFillType : config.dataFillType;
+        this.tickLabelHideLast = typeof config.tickLabelHideLast === "undefined" ? this.tickLabelHideLast : config.tickLabelHideLast;
     }
 }
