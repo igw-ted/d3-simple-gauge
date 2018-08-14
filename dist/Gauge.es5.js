@@ -58,46 +58,76 @@ var Gauge = function () {
 
                     if (vars.data > 0) {
                         startAngle = (vars.orientation - this.tickOffset + vars.tick * i) * Math.PI / 180;
-                        endAngle = (vars.orientation - this.tickOffset + vars.tick * i + this.tickThickness) * Math.PI / 180;
+                        endAngle = (vars.orientation - this.tickOffset + 1 + vars.tick * i) * Math.PI / 180;
                     } else {
                         startAngle = (vars.orientation - this.tickOffset + vars.tick * i * -1) * Math.PI / 180;
-                        endAngle = (vars.orientation - this.tickOffset + vars.tick * i * -1 + this.tickThickness) * Math.PI / 180;
+                        endAngle = (vars.orientation - this.tickOffset + 1 + vars.tick * i * -1) * Math.PI / 180;
                     }
 
                     this.appendArc(startAngle, endAngle, vars, i);
                 }
             } else {
+                if (this.dataFillType === "needle") {
 
-                var _data = vars.data;
+                    var _data = vars.data;
 
-                if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
-                    if (_data > this.maxValue) {
-                        _data = this.maxValue;
+                    if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                        if (_data > this.maxValue) {
+                            _data = this.maxValue;
+                        }
+                    }
+
+                    if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                        if (_data < this.minValue) {
+                            _data = this.minValue;
+                        }
+                    }
+
+                    var _i = Math.abs(_data / this.tickSize);
+                    var _startAngle = void 0,
+                        _endAngle = void 0;
+
+                    if (vars.data > 0) {
+                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i) * Math.PI / 180;
+                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
+                    } else {
+                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i * -1) * Math.PI / 180;
+                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
+                    }
+
+                    this.appendArc(_startAngle, _endAngle, vars, _i);
+                } else if (this.dataFillType === "full") {
+
+                    var _data2 = vars.data;
+
+                    if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                        if (_data2 > this.maxValue) {
+                            _data2 = this.maxValue;
+                        }
+                    }
+
+                    if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                        if (_data2 < this.minValue) {
+                            _data2 = this.minValue;
+                        }
+                    }
+
+                    var _startAngle2 = void 0,
+                        _endAngle2 = void 0;
+
+                    if (vars.data > 0) {
+                        _startAngle2 = vars.orientation * Math.PI / 180;
+                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data2 / this.tickSize)) * Math.PI / 180;
+                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data2 / this.tickSize));
+                    } else {
+                        _startAngle2 = vars.orientation * Math.PI / 180;
+                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data2 / this.tickSize) * -1) * Math.PI / 180;
+                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data2 / this.tickSize));
                     }
                 }
 
-                if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
-                    if (_data < this.minValue) {
-                        _data = this.minValue;
-                    }
-                }
-
-                var _i = Math.abs(_data / this.tickSize);
-                var _startAngle = void 0,
-                    _endAngle = void 0;
-
-                if (vars.data > 0) {
-                    _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i) * Math.PI / 180;
-                    _endAngle = (vars.orientation - this.tickOffset + vars.tick * _i + this.tickThickness) * Math.PI / 180;
-                } else {
-                    _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i * -1) * Math.PI / 180;
-                    _endAngle = (vars.orientation - this.tickOffset + vars.tick * _i * -1 + this.tickThickness) * Math.PI / 180;
-                }
-
-                this.appendArc(_startAngle, _endAngle, vars, _i);
+                this.populateLabels();
             }
-
-            this.populateLabels();
         }
     }, {
         key: "appendArc",
@@ -339,7 +369,6 @@ var Gauge = function () {
             this.height = 400;
             this.thickness = 3;
             this.tickSize = 1;
-            this.tickThickness = 3;
             this.offset = 0;
             this.orientation = this.orientationVar().NORTH;
             this.unit = "";
@@ -377,7 +406,6 @@ var Gauge = function () {
             this.height = typeof config.height === "undefined" ? this.height : config.height;
             this.thickness = typeof config.thickness === "undefined" ? this.thickness : config.thickness;
             this.tickSize = typeof config.tickSize === "undefined" ? this.tickSize : config.tickSize;
-            this.tickThickness = typeof config.tickThickness === "undefined" ? this.tickThickness : config.tickThickness;
             this.offset = typeof config.offset === "undefined" ? this.offset : config.offset;
             this.orientation = typeof config.orientation === "undefined" ? this.orientation : config.orientation;
             this.unit = typeof config.unit === "undefined" ? this.unit : config.unit;

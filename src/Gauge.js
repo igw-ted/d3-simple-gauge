@@ -46,11 +46,11 @@ class Gauge {
 
                 if(vars.data > 0) {
                     startAngle = (vars.orientation - this.tickOffset + (vars.tick * i)) * Math.PI/180;
-                    endAngle = (vars.orientation - this.tickOffset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
+                    endAngle = (vars.orientation - this.tickOffset + 1 + (vars.tick * i)) * Math.PI/180;
                 }
                 else {
                     startAngle = (vars.orientation - this.tickOffset + (vars.tick * i * -1)) * Math.PI/180;
-                    endAngle = (vars.orientation  - this.tickOffset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
+                    endAngle = (vars.orientation - this.tickOffset + 1 + (vars.tick * i * -1)) * Math.PI/180;
                 }
 
                 this.appendArc(startAngle, endAngle, vars, i);
@@ -58,37 +58,69 @@ class Gauge {
             }
         }
         else {
+            if(this.dataFillType === "needle") {
 
-            let data = vars.data;
+                let data = vars.data;
 
-            if(typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
-                if(data > this.maxValue) {
-                    data = this.maxValue;
+                if(typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                    if(data > this.maxValue) {
+                        data = this.maxValue;
+                    }
+                }
+
+                if(typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                    if(data < this.minValue) {
+                        data = this.minValue;
+                    }
+                }
+
+                let i = Math.abs(data / this.tickSize);
+                let startAngle, endAngle;
+
+                if(vars.data > 0) {
+                    startAngle = (vars.orientation - this.tickOffset + (vars.tick * i)) * Math.PI/180;
+                    endAngle = (vars.orientation + (vars.tick * i)) * Math.PI/180;
+                }
+                else {
+                    startAngle = (vars.orientation - this.tickOffset + (vars.tick * i * -1)) * Math.PI/180;
+                    endAngle = (vars.orientation + (vars.tick * i)) * Math.PI/180;
+                }
+
+                this.appendArc(startAngle, endAngle, vars, i);
+            }
+
+            else if(this.dataFillType === "full") {
+
+                let data = vars.data;
+
+                if(typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                    if(data > this.maxValue) {
+                        data = this.maxValue;
+                    }
+                }
+
+                if(typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                    if(data < this.minValue) {
+                        data = this.minValue;
+                    }
+                }
+
+                let startAngle, endAngle;
+
+                if(vars.data > 0) {
+                    startAngle = vars.orientation * Math.PI/180;
+                    endAngle = (vars.orientation + (vars.tick * Math.abs(data / this.tickSize))) * Math.PI/180;
+                    this.appendArc(startAngle, endAngle, vars, Math.abs(data / this.tickSize));
+                }
+                else {
+                    startAngle = vars.orientation * Math.PI/180;
+                    endAngle = (vars.orientation + (vars.tick * Math.abs(data / this.tickSize) * -1)) * Math.PI/180;
+                    this.appendArc(startAngle, endAngle, vars, Math.abs(data / this.tickSize));
                 }
             }
 
-            if(typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
-                if(data < this.minValue) {
-                    data = this.minValue;
-                }
-            }
-
-            let i = Math.abs(data / this.tickSize);
-            let startAngle, endAngle;
-
-            if(vars.data > 0) {
-                startAngle = (vars.orientation - this.tickOffset + (vars.tick * i)) * Math.PI/180;
-                endAngle = (vars.orientation - this.tickOffset + (vars.tick * i) + this.tickThickness) * Math.PI/180;
-            }
-            else {
-                startAngle = (vars.orientation - this.tickOffset + (vars.tick * i * -1)) * Math.PI/180;
-                endAngle = (vars.orientation  - this.tickOffset + (vars.tick * i * -1) + this.tickThickness) * Math.PI/180;
-            }
-
-            this.appendArc(startAngle, endAngle, vars, i);
+            this.populateLabels();
         }
-
-        this.populateLabels();
     }
 
     appendArc(startAngle, endAngle, vars, offset, i) {
@@ -323,7 +355,6 @@ class Gauge {
         this.height = 400;
         this.thickness = 3;
         this.tickSize = 1;
-        this.tickThickness = 3;
         this.offset = 0;
         this.orientation = this.orientationVar().NORTH;
         this.unit = "";
@@ -358,7 +389,6 @@ class Gauge {
         this.height = typeof config.height === "undefined" ? this.height : config.height;
         this.thickness = typeof config.thickness === "undefined" ? this.thickness : config.thickness;
         this.tickSize = typeof config.tickSize === "undefined" ? this.tickSize : config.tickSize;
-        this.tickThickness = typeof config.tickThickness === "undefined" ? this.tickThickness : config.tickThickness;
         this.offset = typeof config.offset === "undefined" ? this.offset : config.offset;
         this.orientation = typeof config.orientation === "undefined" ? this.orientation : config.orientation;
         this.unit = typeof config.unit === "undefined" ? this.unit : config.unit;
