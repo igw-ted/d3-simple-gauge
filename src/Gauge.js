@@ -7,7 +7,12 @@ class Gauge {
     /*
      *  Update the view.
      */
-    update() {
+    update(data) {
+
+        if(typeof data !== "undefined") {
+            this.data = data;
+        }
+
         if(typeof this.debug !== "undefined") {
             this.toString();
             if(this.varsHasErrors()) {

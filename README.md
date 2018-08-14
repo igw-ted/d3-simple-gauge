@@ -98,4 +98,4 @@ gauge.update();
 | Method | Possible Input Variables | Description | Example |
 |-|-|-|-|
 | `setConfig()` | An object of configs | You can add your configs by passing an object of configs to the `setConfig()` method. | `setConfig({width: 400, offset: 20, unit: "%"})` |
-| `update()` | *None* | Call this to update the view. | `SetData(25); update();` |
+| `update(data)` | *None* | Call this to update the view. If the data variable isn't set, the object will use the data already set. | `update(25);` |

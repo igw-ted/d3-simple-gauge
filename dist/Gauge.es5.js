@@ -18,7 +18,12 @@ var Gauge = function () {
 
     _createClass(Gauge, [{
         key: "update",
-        value: function update() {
+        value: function update(data) {
+
+            if (typeof data !== "undefined") {
+                this.data = data;
+            }
+
             if (typeof this.debug !== "undefined") {
                 this.toString();
                 if (this.varsHasErrors()) {
@@ -38,21 +43,21 @@ var Gauge = function () {
             }
             if (typeof this.dataFillType === "undefined") {
 
-                var data = vars.data;
+                var _data = vars.data;
 
                 if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
-                    if (data > this.maxValue) {
-                        data = this.maxValue;
+                    if (_data > this.maxValue) {
+                        _data = this.maxValue;
                     }
                 }
 
                 if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
-                    if (data < this.minValue) {
-                        data = this.minValue;
+                    if (_data < this.minValue) {
+                        _data = this.minValue;
                     }
                 }
 
-                for (var i = 0; i <= Math.abs(data / this.tickSize); i++) {
+                for (var i = 0; i <= Math.abs(_data / this.tickSize); i++) {
                     var startAngle = void 0,
                         endAngle = void 0;
 
@@ -69,35 +74,6 @@ var Gauge = function () {
             } else {
                 if (this.dataFillType === "needle") {
 
-                    var _data = vars.data;
-
-                    if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
-                        if (_data > this.maxValue) {
-                            _data = this.maxValue;
-                        }
-                    }
-
-                    if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
-                        if (_data < this.minValue) {
-                            _data = this.minValue;
-                        }
-                    }
-
-                    var _i = Math.abs(_data / this.tickSize);
-                    var _startAngle = void 0,
-                        _endAngle = void 0;
-
-                    if (vars.data > 0) {
-                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i) * Math.PI / 180;
-                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
-                    } else {
-                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i * -1) * Math.PI / 180;
-                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
-                    }
-
-                    this.appendArc(_startAngle, _endAngle, vars, _i);
-                } else if (this.dataFillType === "full") {
-
                     var _data2 = vars.data;
 
                     if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
@@ -112,17 +88,46 @@ var Gauge = function () {
                         }
                     }
 
+                    var _i = Math.abs(_data2 / this.tickSize);
+                    var _startAngle = void 0,
+                        _endAngle = void 0;
+
+                    if (vars.data > 0) {
+                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i) * Math.PI / 180;
+                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
+                    } else {
+                        _startAngle = (vars.orientation - this.tickOffset + vars.tick * _i * -1) * Math.PI / 180;
+                        _endAngle = (vars.orientation + vars.tick * _i) * Math.PI / 180;
+                    }
+
+                    this.appendArc(_startAngle, _endAngle, vars, _i);
+                } else if (this.dataFillType === "full") {
+
+                    var _data3 = vars.data;
+
+                    if (typeof this.allowOverflow === "undefined" || !this.allowOverflow) {
+                        if (_data3 > this.maxValue) {
+                            _data3 = this.maxValue;
+                        }
+                    }
+
+                    if (typeof this.allowUnderflow === "undefined" || !this.allowUnderflow) {
+                        if (_data3 < this.minValue) {
+                            _data3 = this.minValue;
+                        }
+                    }
+
                     var _startAngle2 = void 0,
                         _endAngle2 = void 0;
 
                     if (vars.data > 0) {
                         _startAngle2 = vars.orientation * Math.PI / 180;
-                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data2 / this.tickSize)) * Math.PI / 180;
-                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data2 / this.tickSize));
+                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data3 / this.tickSize)) * Math.PI / 180;
+                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data3 / this.tickSize));
                     } else {
                         _startAngle2 = vars.orientation * Math.PI / 180;
-                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data2 / this.tickSize) * -1) * Math.PI / 180;
-                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data2 / this.tickSize));
+                        _endAngle2 = (vars.orientation + vars.tick * Math.abs(_data3 / this.tickSize) * -1) * Math.PI / 180;
+                        this.appendArc(_startAngle2, _endAngle2, vars, Math.abs(_data3 / this.tickSize));
                     }
                 }
 
